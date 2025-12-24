@@ -1,0 +1,98 @@
+# config/development.yaml
+# AutoDevCrew - Development Configuration
+
+# Core Settings
+mode: "development"
+debug: true
+log_level: "INFO"
+
+# Privacy Settings
+privacy_level: "strict"  # strict, moderate, open
+data_retention: "local_only"
+auto_cleanup: true
+cleanup_interval_hours: 24
+
+# Lightweight Mode
+lightweight_mode: false
+quantization: "int4"  # fp16, int8, int4, gptq
+simplified_agents: false
+cpu_offload_layers: 4
+
+# LLM Configuration
+llm:
+  provider: "local"  # local, ollama, openai
+  model: "llama2"
+  temperature: 0.7
+  max_tokens: 2048
+  context_window: 4096
+  
+  # Local models (for offline use)
+  local_models:
+    - name: "llama2-7b-4bit"
+      path: "quantized_models/llama2-7b-4bit/model.gguf"
+      quantization: "Q4_K_M"
+    - name: "mistral-7b-4bit"
+      path: "quantized_models/mistral-7b-4bit/model.gguf"
+      quantization: "Q4_K_M"
+    - name: "codellama-7b-4bit"
+      path: "quantized_models/codellama-7b-4bit/model.gguf"
+      quantization: "Q4_K_M"
+
+# Agent Configuration
+agents:
+  engineer:
+    quality_threshold: 70
+    max_iterations: 3
+    enable_templates: true
+    
+  tester:
+    coverage_target: 80
+    security_scan: true
+    performance_test: false
+    
+  devops:
+    environments: ["development"]
+    simulate_only: true  # Don't actually deploy in dev
+    monitoring: false
+    
+  summarizer:
+    report_template: "detailed"
+
+# Database
+database:
+  url: "sqlite:///autodevcrew.db"
+  echo: false
+  pool_size: 10
+
+# GitHub Integration
+github:
+  enabled: false
+  token: ""  # Set via environment variable
+  repository: ""
+  create_issues: false
+  webhook_url: ""
+
+# Cloud Deployment
+cloud:
+  huggingface:
+    enabled: true
+    token: ""  # HF_TOKEN env var
+    default_space: "autodevcrew-demo"
+    
+  colab:
+    enabled: true
+    ngrok_token: ""  # NGROK_TOKEN env var
+
+# Workflow Settings
+workflows:
+  default: "linear"
+  available: ["linear", "parallel", "agile", "kanban"]
+  max_concurrent_tasks: 3
+  timeout_seconds: 300
+
+# Monitoring
+monitoring:
+  enabled: true
+  metrics_port: 9090
+  dashboard_port: 3000
+  alerting: false

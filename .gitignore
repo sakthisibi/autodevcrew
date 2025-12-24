@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+*.db
+*.log
+quantized_models/
+*.gguf
+.env
+.venv/
+env/
+venv/
